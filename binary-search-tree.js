@@ -35,6 +35,32 @@ class Tree {
 
     return root;
   }
+
+  // Get inorder successor (smallest in right subtree)
+  getSuccessor(curr) {
+    curr = curr.right;
+    while (curr !== null && curr.left !== null) curr = curr.left;
+    return curr;
+  }
+
+  // Delete a node with value x from BST
+  deleteItem(root, x) {
+    if (root === null) return root;
+
+    if (root.data > x) root.left = this.deleteItem(root.left, x);
+    else if (root.data < x) root.right = this.deleteItem(root.right, x);
+    else {
+      // Node with 0 or 1 child
+      if (root.left === null) return root.right;
+      if (root.right === null) return root.left;
+
+      // Node with 2 children
+      const succ = this.getSuccessor(root);
+      root.data = succ.data;
+      root.right = this.deleteItem(root.right, succ.data);
+    }
+    return root;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -55,4 +81,6 @@ const arr = [1, 3, 4, 5, 7, 8, 9, 23, 67, 324, 6345];
 const obj = new Tree(arr);
 
 // obj.insert(obj.root, 1023);
+prettyPrint(obj.root);
+obj.deleteItem(obj.root, 3);
 prettyPrint(obj.root);
