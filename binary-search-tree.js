@@ -8,7 +8,8 @@ class Node {
 
 class Tree {
   constructor(arr = []) {
-    this.root = this.buildTree(arr, 0, arr.length - 1);
+    const sortedArr = arr.sort((a, b) => a - b);
+    this.root = this.buildTree(sortedArr);
   }
 
   buildTree(arr, start = 0, end = arr.length - 1) {
@@ -23,29 +24,16 @@ class Tree {
     return node;
   }
 
-  insert(value) {
-    let currNode = this.root;
+  insert(root, value) {
+    if (root === null) return new Node(value);
 
-    if (currNode === null) {
-      this.root = new Node(value);
-      return;
+    if (value < root.data) {
+      root.left = this.insert(root.left, value);
+    } else {
+      root.right = this.insert(root.right, value);
     }
 
-    while (currNode !== null) {
-      if (value < currNode.data) {
-        if (currNode.left === null) {
-          this.root = new Node(value);
-          return;
-        }
-        currNode = currNode.left;
-      } else {
-        if (currNode.right === null) {
-          this.root = new Node(value);
-          return;
-        }
-        currNode = currNode.right;
-      }
-    }
+    return root;
   }
 }
 
@@ -62,6 +50,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-const obj = new Tree([1, 2, 3, 4, 5]);
+const arr = [1, 3, 4, 5, 7, 8, 9, 23, 67, 324, 6345];
+
+const obj = new Tree(arr);
+
+// obj.insert(obj.root, 1023);
 prettyPrint(obj.root);
-console.log(obj.root);
