@@ -61,6 +61,20 @@ class Tree {
     }
     return root;
   }
+
+  find(root, value) {
+    if (root === null) {
+      return "No such value found!";
+    }
+
+    if (value === root.data) {
+      return root;
+    } else if (value > root.data) {
+      return this.find(root.right, value);
+    } else if (value < root.data) {
+      return this.find(root.left, value);
+    }
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -80,7 +94,8 @@ const arr = [1, 3, 4, 5, 7, 8, 9, 23, 67, 324, 6345];
 
 const obj = new Tree(arr);
 
-// obj.insert(obj.root, 1023);
+console.log(obj.insert(obj.root, 1023));
+console.log(obj.find(obj.root, 24));
 prettyPrint(obj.root);
-obj.deleteItem(obj.root, 3);
-prettyPrint(obj.root);
+// obj.deleteItem(obj.root, 3);
+// prettyPrint(obj.root);
