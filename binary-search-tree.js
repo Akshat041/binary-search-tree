@@ -75,27 +75,20 @@ class Tree {
       return this.find(root.left, value);
     }
   }
+
+  levelOrderForEach(callback) {
+    const queue = [this.root];
+
+    for (const node of queue) {
+      if (node.left) {
+        queue.push(node.left);
+      }
+      if (node.right) {
+        queue.push(node.right);
+      }
+      callback(node);
+    }
+  }
 }
 
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
-
-const arr = [1, 3, 4, 5, 7, 8, 9, 23, 67, 324, 6345];
-
-const obj = new Tree(arr);
-
-console.log(obj.insert(obj.root, 1023));
-console.log(obj.find(obj.root, 24));
-prettyPrint(obj.root);
-// obj.deleteItem(obj.root, 3);
-// prettyPrint(obj.root);
+export default Tree;
