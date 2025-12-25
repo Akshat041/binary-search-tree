@@ -77,6 +77,9 @@ class Tree {
   }
 
   levelOrderForEach(callback) {
+    if (!callback) {
+      throw new Error("Callback not provided.");
+    }
     const queue = [this.root];
 
     for (const node of queue) {
