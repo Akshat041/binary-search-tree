@@ -92,6 +92,42 @@ class Tree {
       callback(node);
     }
   }
+
+  preOrderForEach(node, callback) {
+    if (!callback) {
+      throw new Error("Callback not provided.");
+    }
+
+    if (node === null) return;
+
+    callback(node);
+    this.preOrderForEach(node.left, callback);
+    this.preOrderForEach(node.right, callback);
+  }
+
+  inOrderForEach(node, callback) {
+    if (!callback) {
+      throw new Error("Callback not provided.");
+    }
+
+    if (node === null) return;
+
+    this.preOrderForEach(node.left, callback);
+    callback(node);
+    this.preOrderForEach(node.right, callback);
+  }
+
+  postOrderForEach(node, callback) {
+    if (!callback) {
+      throw new Error("Callback not provided.");
+    }
+
+    if (node === null) return;
+
+    this.preOrderForEach(node.left, callback);
+    this.preOrderForEach(node.right, callback);
+    callback(node);
+  }
 }
 
 export default Tree;
