@@ -62,25 +62,14 @@ class Tree {
     return root;
   }
 
-  find(root, value) {
-    if (root === null) {
-      return "No such value found!";
-    }
-
-    if (value === root.data) {
-      return root;
-    } else if (value > root.data) {
-      return this.find(root.right, value);
-    } else if (value < root.data) {
-      return this.find(root.left, value);
-    }
-  }
-
   levelOrderForEach(callback) {
     if (!callback) {
       throw new Error("Callback not provided.");
     }
-    const queue = [this.root];
+
+    if (this.root) {
+      var queue = [this.root];
+    }
 
     for (const node of queue) {
       if (node.left) {
@@ -112,9 +101,9 @@ class Tree {
 
     if (node === null) return;
 
-    this.preOrderForEach(node.left, callback);
+    this.inOrderForEach(node.left, callback);
     callback(node);
-    this.preOrderForEach(node.right, callback);
+    this.inOrderForEach(node.right, callback);
   }
 
   postOrderForEach(node, callback) {
@@ -124,9 +113,37 @@ class Tree {
 
     if (node === null) return;
 
-    this.preOrderForEach(node.left, callback);
-    this.preOrderForEach(node.right, callback);
+    this.postOrderForEach(node.left, callback);
+    this.postOrderForEach(node.right, callback);
     callback(node);
+  }
+
+  // height function implementation
+  findNode(node = this.root, value) {
+    if (node == null) {
+      console.log("no such value found.");
+      return null;
+    }
+
+    if (node.data === value) {
+      return node;
+    } else if (value > node.data) {
+      return this.findNode(node.right, value);
+    } else if (value < node.data) {
+      return this.findNode(node.left, value);
+    }
+  }
+
+  height(node) {
+    if (node === null) {
+      return -1;
+    }
+
+    const lh = this.height(node.left);
+    const rh = this.height(node.right);
+
+    console.log(lh, rh);
+    return Math.max(lh, rh) + 1;
   }
 }
 
