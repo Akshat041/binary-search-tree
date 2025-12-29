@@ -141,8 +141,6 @@ class Tree {
 
     const lh = this.height(node.left);
     const rh = this.height(node.right);
-
-    console.log(lh, rh);
     return Math.max(lh, rh) + 1;
   }
 }
