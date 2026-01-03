@@ -8,7 +8,11 @@ class Node {
 
 class Tree {
   constructor(arr = []) {
-    const sortedArr = arr.sort((a, b) => a - b);
+    const sortedArr = arr
+      .slice()
+      .sort((a, b) => a - b)
+      .filter((v, i, a) => i === 0 || v !== a[i - 1]);
+
     this.root = this.buildTree(sortedArr);
   }
 
