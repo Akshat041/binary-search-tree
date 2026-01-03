@@ -94,7 +94,12 @@ class Tree {
     this.preOrderForEach(node.right, callback);
   }
 
-  inOrderForEach(node, callback) {
+  inOrderForEach(
+    node = this.root,
+    callback = (node) => {
+      console.log(node.data);
+    }
+  ) {
     if (!callback) {
       throw new Error("Callback not provided.");
     }
@@ -170,6 +175,16 @@ class Tree {
       return false;
     }
     return this.isBalanced(node.left) && this.isBalanced(node.right);
+  }
+
+  rebalance() {
+    const inOrderArr = [];
+
+    this.inOrderForEach(this.root, (node) => {
+      inOrderArr.push(node.data);
+    });
+
+    this.root = this.buildTree(inOrderArr, 0, inOrderArr.length - 1);
   }
 }
 
