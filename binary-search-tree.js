@@ -66,7 +66,11 @@ class Tree {
     return root;
   }
 
-  levelOrderForEach(callback) {
+  levelOrderForEach(
+    callback = (node) => {
+      console.log(node.data);
+    }
+  ) {
     if (!callback) {
       throw new Error("Callback not provided.");
     }
@@ -86,7 +90,10 @@ class Tree {
     }
   }
 
-  preOrderForEach(node, callback) {
+  preOrderForEach(
+    node = this.root,
+    callback = (node) => console.log(node.data)
+  ) {
     if (!callback) {
       throw new Error("Callback not provided.");
     }
@@ -115,7 +122,12 @@ class Tree {
     this.inOrderForEach(node.right, callback);
   }
 
-  postOrderForEach(node, callback) {
+  postOrderForEach(
+    node = this.root,
+    callback = (node) => {
+      console.log(node.data);
+    }
+  ) {
     if (!callback) {
       throw new Error("Callback not provided.");
     }
