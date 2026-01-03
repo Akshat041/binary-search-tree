@@ -143,6 +143,20 @@ class Tree {
     const rh = this.height(node.right);
     return Math.max(lh, rh) + 1;
   }
+
+  depth(root = this.root, value, count = 0) {
+    if (!root) {
+      return null;
+    }
+
+    if (root.data === value) {
+      return count;
+    } else if (value < root.data) {
+      return this.depth(root.left, value, count + 1);
+    } else {
+      return this.depth(root.right, value, count + 1);
+    }
+  }
 }
 
 export default Tree;
